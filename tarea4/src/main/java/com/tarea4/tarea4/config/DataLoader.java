@@ -24,9 +24,9 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (actividadRepository.count() == 0) {
-            Actividad a1 = new Actividad(LocalDate.of(2025, 6, 1), "Plaza Central", "Clase de Yoga", "salud");
-            Actividad a2 = new Actividad(LocalDate.of(2025, 6, 10), "Cancha Norte", "Partido amistoso", "deporte");
-            Actividad a3 = new Actividad(LocalDate.of(2025, 6, 5), "Parque Cultural", "Taller de pintura", "arte");
+            Actividad a1 = new Actividad(LocalDate.of(2025, 6, 1), "Plaza Central", "Clase de Yoga", "salud", "contacto@yoga.cl");
+            Actividad a2 = new Actividad(LocalDate.of(2025, 6, 10), "Cancha Norte", "Partido amistoso", "deporte", "deportes@contacto.cl");
+            Actividad a3 = new Actividad(LocalDate.of(2025, 6, 5), "Parque Cultural", "Taller de pintura", "arte", "arte@cultura.cl");
 
             actividadRepository.saveAll(List.of(a1, a2, a3));
 
