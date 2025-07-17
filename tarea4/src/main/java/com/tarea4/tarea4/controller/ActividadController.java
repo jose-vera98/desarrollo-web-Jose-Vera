@@ -29,8 +29,15 @@ public class ActividadController {
         for (Actividad act : actividades) {
             List<Nota> notas = notaRepository.findByActividadId(act.getId());
             if (!notas.isEmpty()) {
-                double avg = notas.stream().mapToInt(Nota::getValor).average().orElse(0);
-                promedios.put(act.getId(), (float) avg);
+                double avg = notas.stream()
+                                  .mapToInt(Nota::getValor)
+                                  .average()
+                                  .orElse(0);
+
+                // Redondeo a 1 decimal
+                float rounded = Math.round(avg * 10f) / 10f;
+
+                promedios.put(act.getId(), rounded);
             }
         }
 
@@ -40,3 +47,4 @@ public class ActividadController {
         return "actividades";
     }
 }
+
