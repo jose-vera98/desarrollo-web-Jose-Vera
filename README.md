@@ -41,6 +41,8 @@ Hubo dos decisiones que tuve que tomar al desarrollar la aplicacion:
 
 2. Que gestor de base de datos usar: Al igual que en la tarea 4, mantengo el uso de H2 para la gestion de bases de datos. Para mas detalles leer el Readme de la branch de la T4. 
 
+3. Quite los whitelabel errors, ya que no son buena practica si ya la app deberia estar en produccion. Ademas de eso, agregue una redirecccion desde localhost:8080/ a localhost:8080/actividades, d forma que al abrir ya envie directamente a esa vista y no lance un 404 por defecto.
+
 
 ## Como ejecutar
 

@@ -1,14 +1,17 @@
 package com.tarea4.tarea4.controller;
 
-import com.tarea4.tarea4.model.Actividad;
-import com.tarea4.tarea4.model.Nota;
-import com.tarea4.tarea4.repository.ActividadRepository;
-import com.tarea4.tarea4.repository.NotaRepository;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.*;
+import com.tarea4.tarea4.model.Actividad;
+import com.tarea4.tarea4.model.Nota;
+import com.tarea4.tarea4.repository.ActividadRepository;
+import com.tarea4.tarea4.repository.NotaRepository;
 
 @Controller
 public class ActividadController {
@@ -45,6 +48,11 @@ public class ActividadController {
         model.addAttribute("promedios", promedios);
 
         return "actividades";
+    }
+
+    @GetMapping("/")
+    public String redirigirAActividades() {
+        return "redirect:/actividades";
     }
 }
 
