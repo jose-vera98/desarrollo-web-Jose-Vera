@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Actividades Realizadas</title>
+</head>
+<body>
+    <h1>Actividades Realizadas</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha Inicio</th>
+                <th>Sector</th>
+                <th>Nombre</th>
+                <th>Tema</th>
+                <th>Nota</th>
+                <th>Evaluar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="actividad : ${actividades}">
+                <td th:text="${actividad.id}"></td>
+                <td th:text="${actividad.fechaInicio}"></td>
+                <td th:text="${actividad.sector}"></td>
+                <td th:text="${actividad.nombre}"></td>
+                <td th:text="${actividad.tema}"></td>
+                <td th:text="${promedios[actividad.id] != null ? promedios[actividad.id] : '-'}"></td>
+
+                <td>
+                    <button th:onclick="'evaluarActividad(' + ${actividad.id} + ')'">Evaluar</button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function evaluarActividad(id) {
+            const nota = prompt("Ingrese nota entre 1 y 7:");
+            const valor = parseInt(nota);
+            if (valor >= 1 && valor <= 7) {
+                fetch("/evaluar/" + id, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ nota: valor })
+                }).then(() => location.reload());
+            } else {
+                alert("Nota inválida");
+            }
+        }
+    </script>
+</body>
+</html>
