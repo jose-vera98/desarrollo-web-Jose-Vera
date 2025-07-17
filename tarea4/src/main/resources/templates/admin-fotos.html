@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrador de Fotos</title>
+</head>
+<body>
+    <h1>Administrador de Fotos</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Foto</th>
+                <th>Nombre Actividad</th>
+                <th>Email</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="foto : ${fotos}">
+                <td><img th:src="@{'/uploads/' + ${foto.nombreArchivo}}" width="150"/></td>
+                <td th:text="${foto.actividad.nombre}"></td>
+                <td th:text="${foto.actividad.email}"></td>
+                <td>
+					<button th:onclick="'eliminarFoto(' + ${foto.id} + ')'">Eliminar</button>
+				</td>
+
+
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+    function eliminarFoto(id) {
+        const motivo = prompt("Ingrese motivo de eliminación (entre 5 y 200 caracteres):");
+
+        if (!motivo || motivo.trim().length < 5 || motivo.length > 200) {
+            alert("Motivo inválido. Debe tener entre 5 y 200 caracteres.");
+            return;
+        }
+
+        fetch("/eliminar-foto/" + id, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ motivo: motivo })
+        }).then(res => {
+            if (res.ok) {
+                location.reload();
+            } else {
+                alert("Hubo un error al eliminar la foto.");
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
