@@ -53,7 +53,7 @@ mvnw.cmd spring-boot:run  (en windows)
 4. Ya se puede ver la aplicacion en localhost:8080/actividades
 5. Tambien se puede acceder a las url /admin-fotos y /log haciendo inicio de sesion.
 
-Nota: requiere Java 17 o superior.
+Nota: requiere Java 17 o superior y maven instalados.
 
 ## Notas: 
 
