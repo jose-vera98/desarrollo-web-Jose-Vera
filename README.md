@@ -23,6 +23,7 @@ En admin-fotos se tienen todas las fotos asociadas a alguna actividad. Se pueden
 
 Estas fotos eliminadas se pueden ver en log. En estas se pueden ver todas las que han sido eliminadas y por que fueron eliminadas. 
 
+En la parte de las imagenes, deje una que no tiene que ver con la actividad ya que es justamente para eliminarlo porque esta mal asignado. 
 
 
 
