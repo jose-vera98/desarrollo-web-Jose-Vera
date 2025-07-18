@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Log del sistema</title>
+    <link rel="stylesheet" href="/css/estilos.css" />
+</head>
+<body>
+    <div class="contenedor">
+
+        <div style="display: flex; justify-content: flex-end; margin-botton: 20px;">
+            <a href="/admin-fotos">
+                <button class="button" >Volver a Administrador de fotos</button>
+            </a>
+        </div>
+
+        <h1>Log del sistema</h1>
+        
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Mensaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="log : ${logs}">
+                    <td th:text="${log.id}"></td>
+                    <td th:text="${#temporals.format(log.fecha, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td th:text="${log.mensaje}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
