@@ -34,7 +34,7 @@ En la parte de las imagenes, deje una que no tiene que ver con la actividad ya q
 - Registro de fotos eliminadas (del mas reciente al mas antiguo)
 - Seguridad e inicio de sesion con Spring Security
 - Para facilitar la navegacion, agregue un boton para ir a ver el log luego de borrar una imagen y un link para ir a ver las fotos desde el log
-
+- Tambien agregue un boton para ir de actividades a administrador de fotos, tambien para facilitar el acceso a las 
 
 
 ## Decisiones de diseño

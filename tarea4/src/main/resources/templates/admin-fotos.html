@@ -9,13 +9,20 @@
     <meta name="_csrf_header"  th:content="${_csrf.headerName}"  />
 </head>
 <body>
+    
+
+        
     <div class="contenedor">
+        <!-- Boton que lleva al log -->
+        <div style="display: flex; justify-content: flex-end; margin-botton: 20px;">
+            <a href="/log">
+                <button class="button" >Ver Log del sistema</button>
+            </a>
+        </div>
+
         <h1>Administrador de Fotos</h1>
 
-        <!-- Enlace al Log -->
-        <p>
-            <a th:href="@{/log}">Ver Log del sistema</a>
-        </p>
+        
 
         <table>
             <thead>
