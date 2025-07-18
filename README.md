@@ -33,6 +33,9 @@ En la parte de las imagenes, deje una que no tiene que ver con la actividad ya q
 - Posibilidad de eliminar fotos
 - Registro de fotos eliminadas (del mas reciente al mas antiguo)
 - Seguridad e inicio de sesion con Spring Security
+- Para facilitar la navegacion, agregue un boton para ir a ver el log luego de borrar una imagen y un link para ir a ver las fotos desde el log
+
+
 
 ## Decisiones de diseño
 
@@ -62,6 +65,7 @@ Nota: requiere Java 17 o superior y maven instalados.
 
 - Debido a que uso H2 en modo memoria, la base de datos se borra al apagar. Esto fue una decision de diseño para que el corrector pueda ver exactamente lo mismo que yo al ejecutar el servidor
 - Los datos se cargan mediante un CommandLineRunner llamado DataLoader.java
+- Al agregar spring secutiry empece a tener problemas de validacion, por lo que tuve que poner CSFR tokens tanto en admin-fotos como en actividades para que pudieran ser usadas. 
 
 
 

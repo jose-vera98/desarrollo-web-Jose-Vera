@@ -48,7 +48,7 @@ public class FotoController {
         Foto foto = optFoto.get();
         fotoRepository.delete(foto);
 
-        String mensaje = "eliminado foto " + foto.getId() + " por usuario admin, motivo: " + motivo;
+        String mensaje = "La foto " + foto.getId() + " fue eliminada por usuario admin, motivo: " + motivo;
         logRepository.save(new Log(mensaje));
 
         return ResponseEntity.ok("Foto eliminada");

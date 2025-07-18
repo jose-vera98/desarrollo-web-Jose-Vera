@@ -3,71 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Actividades Realizadas</title>
-    <!-- Incluimos el csfr header para que pueda hacer el post luego de haber agregado security -->
-    <meta name="_csrf"        th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <!-- CSRF token headers para llamadas POST tras haber incluido Spring Security -->
+    <meta name="_csrf"        th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <link rel="stylesheet" href="/css/estilos.css" />
 </head>
 <body>
-    <h1>Actividades Realizadas</h1>
+    <div class="contenedor">
+        <h1>Actividades Realizadas</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Fecha Inicio</th>
-                <th>Sector</th>
-                <th>Nombre</th>
-                <th>Tema</th>
-                <th>Nota</th>
-                <th>Evaluar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="actividad : ${actividades}">
-                <td th:text="${actividad.id}"></td>
-                <td th:text="${actividad.fechaInicio}"></td>
-                <td th:text="${actividad.sector}"></td>
-                <td th:text="${actividad.nombre}"></td>
-                <td th:text="${actividad.tema}"></td>
-                <td th:text="${promedios[actividad.id] != null ? promedios[actividad.id] : '-'}"></td>
-                <td>
-                    <button th:onclick="'evaluarActividad(' + ${actividad.id} + ')'">
-                        Evaluar
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha Inicio</th>
+                    <th>Sector</th>
+                    <th>Nombre</th>
+                    <th>Tema</th>
+                    <th>Nota</th>
+                    <th>Evaluar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="actividad : ${actividades}">
+                    <td th:text="${actividad.id}"></td>
+                    <td th:text="${actividad.fechaInicio}"></td>
+                    <td th:text="${actividad.sector}"></td>
+                    <td th:text="${actividad.nombre}"></td>
+                    <td th:text="${actividad.tema}"></td>
+                    <td th:text="${promedios[actividad.id] != null ? promedios[actividad.id] : '-'}"></td>
+                    <td>
+                        <button th:onclick="'evaluarActividad(' + ${actividad.id} + ')'">
+                            Evaluar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <!-- inline JS para Thymeleaf -->
+    <!-- Inline JavaScript con Thymeleaf para manejar CSRF y fetch -->
     <script th:inline="javascript">
-    
+    /*<![CDATA[*/
     function evaluarActividad(id) {
         const nota = prompt("Ingrese nota entre 1 y 7:");
         const valor = parseInt(nota, 10);
         if (valor >= 1 && valor <= 7) {
-            
             const token  = /*[[${_csrf.token}]]*/ '';
             const header = /*[[${_csrf.headerName}]]*/ '';
 
             fetch('/evaluar/' + id, {
-                method: "POST",
-                credentials: 'same-origin',     
+                method: 'POST',
+                credentials: 'same-origin',
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                     [header]: token
                 },
                 body: JSON.stringify({ nota: valor })
             })
-            .then(resp => {
-                if (!resp.ok) throw new Error("Error al enviar la nota");
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al enviar la nota');
+                }
                 location.reload();
             })
-            .catch(e => alert(e.message));
+            .catch(err => alert(err.message));
         } else {
-            alert("Nota inválida");
+            alert("Nota inválida. Debe ser un número entero entre 1 y 7.");
         }
     }
+    /*]]>*/
     </script>
 </body>
 </html>

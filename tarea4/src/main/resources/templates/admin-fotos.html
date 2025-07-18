@@ -3,57 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Administrador de Fotos</title>
+    <link rel="stylesheet" href="/css/estilos.css" />
+    <!-- CSRF tokens para Spring Security -->
+    <meta name="_csrf"        th:content="${_csrf.token}"       />
+    <meta name="_csrf_header"  th:content="${_csrf.headerName}"  />
 </head>
 <body>
-    <h1>Administrador de Fotos</h1>
+    <div class="contenedor">
+        <h1>Administrador de Fotos</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Foto</th>
-                <th>Nombre Actividad</th>
-                <th>Email</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="foto : ${fotos}">
-                <td><img th:src="@{'/uploads/' + ${foto.nombreArchivo}}" width="150"/></td>
-                <td th:text="${foto.actividad.nombre}"></td>
-                <td th:text="${foto.actividad.email}"></td>
-                <td>
-					<button th:onclick="'eliminarFoto(' + ${foto.id} + ')'">Eliminar</button>
-				</td>
+        <!-- Enlace al Log -->
+        <p>
+            <a th:href="@{/log}">Ver Log del sistema</a>
+        </p>
 
+        <table>
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nombre Actividad</th>
+                    <th>Email</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="foto : ${fotos}">
+                    <td>
+                        <img th:src="@{'/uploads/' + ${foto.nombreArchivo}}" width="300" />
+                    </td>
+                    <td th:text="${foto.actividad.nombre}"></td>
+                    <td th:text="${foto.actividad.email}"></td>
+                    <td>
+                        <button th:onclick="'eliminarFoto(' + ${foto.id} + ')'">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-            </tr>
-        </tbody>
-    </table>
-
-    <script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
     function eliminarFoto(id) {
         const motivo = prompt("Ingrese motivo de eliminación (entre 5 y 200 caracteres):");
-
         if (!motivo || motivo.trim().length < 5 || motivo.length > 200) {
             alert("Motivo inválido. Debe tener entre 5 y 200 caracteres.");
             return;
         }
 
-        fetch("/eliminar-foto/" + id, {
-            method: "POST",
+        // Leer token CSRF y nombre de la cabecera desde las meta tags
+        const token  = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        fetch('/eliminar-foto/' + id, {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                [header]: token,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ motivo: motivo })
-        }).then(res => {
-            if (res.ok) {
-                location.reload();
-            } else {
-                alert("Hubo un error al eliminar la foto.");
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Hubo un error al eliminar la foto.');
             }
-        });
+            location.reload();
+        })
+        .catch(err => alert(err.message));
     }
-</script>
-
+    /*]]>*/
+    </script>
 </body>
 </html>
