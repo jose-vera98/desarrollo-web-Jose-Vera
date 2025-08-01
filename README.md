@@ -1,3 +1,5 @@
+Este repositorio incluye todas las entregas del curso de Desarrollo Web, basado principlamente en Flask, con Front en JS, con la sultimas 2 entregas cambiando el backend a Java
+
 Autor: Jose Vera
 Curso: Diseño y Desarrollo de Aplicaciones Web - CC5002
 Profesor: José Urzúa
